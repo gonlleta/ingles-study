@@ -1,151 +1,229 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Elevate English | Advanced C1/C2 Practice</title>
-    <meta name="description" content="Master advanced English vocabulary, idioms, and grammar. Designed for C1 and C2 learners.">
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <div class="bg-blob"></div>
-    <div class="bg-blob-2"></div>
-
-    <header>
-      <div class="logo-container">
-        <div class="logo">Elevate English</div>
-        <div class="xp-badge">
-          <span id="xp-counter">⭐ 0 XP</span>
-          <span class="streak" id="streak-counter">🔥 1</span>
-        </div>
-      </div>
-      <nav>
-        <ul id="nav-menu">
-          <li><button class="nav-btn active" data-target="vocab-section">Vocabulary</button></li>
-          <li><button class="nav-btn" data-target="idioms-section">Idioms</button></li>
-          <li><button class="nav-btn" data-target="grammar-section">Grammar</button></li>
-          <li><button class="nav-btn" data-target="writing-section">Writing (AI)</button></li>
-          <li><button class="nav-btn" data-target="speaking-section" style="color:var(--accent-color);">Speaking 🎤</button></li>
-          <li><button class="theme-toggle" id="theme-btn" title="Toggle Theme">☀️</button></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main>
-      <!-- Vocabulary Section -->
-      <section id="vocab-section" class="section active">
-        <h2>Advanced Vocabulary</h2>
-        <p class="subtitle">Flip the card and use spaced repetition to learn.</p>
-        
-        <div class="glass-card">
-          <div class="flashcard-container" id="vocab-card-container">
-            <div class="flashcard" id="vocab-flashcard">
-              <div class="flashcard-face flashcard-front">
-                <div class="word-header">
-                  <div class="word-title" id="fc-word">Loading...</div>
-                  <button class="btn-audio" id="btn-audio" title="Listen" aria-label="Listen">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                    </svg>
-                  </button>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memrise Clone - Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- DASHBOARD SCREEN -->
+        <div id="dashboard" class="screen active">
+            <header class="top-nav">
+                <div class="logo">
+                    <h2>MemriseClone</h2>
                 </div>
-                <div class="pronunciation" id="fc-pronunciation"></div>
-              </div>
-              <div class="flashcard-face flashcard-back">
-                <div class="definition" id="fc-definition"></div>
-                <div class="example" id="fc-example"></div>
-              </div>
-            </div>
-            
-            <div class="controls">
-              <div class="default-controls">
-                <button class="btn-primary" id="vocab-flip-btn">Flip Card ↻</button>
-              </div>
-              <div class="sr-controls">
-                <button class="btn-primary btn-warning" id="btn-study-again">Study Again</button>
-                <button class="btn-primary btn-success" id="btn-got-it">Got It (+10 XP)</button>
-              </div>
-            </div>
-          </div>
+                <div class="nav-right">
+                    <div class="stats">
+                        <div class="stat streak"><i class="fa-solid fa-fire"></i> <span id="streak-counter">0</span></div>
+                        <div class="stat stars"><i class="fa-solid fa-star"></i> <span id="xp-counter">0</span></div>
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar">👤</div>
+                        <span class="username">Gonza</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard-container">
+                <div class="main-content">
+                    <h1 class="greeting">¡Hola! Listo para aprender.</h1>
+                    
+                    <div class="course-progress-header">
+                        <div class="course-progress">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="course-progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <span id="course-progress-text">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="courses-grid">
+                        <!-- Nivel 1: Clásico -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">📝</div>
+                                <div>
+                                    <h2>1. Opción Múltiple</h2>
+                                    <p>Lee en español y selecciona inglés</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('classic')">Aprender</button>
+                        </div>
+
+                        <!-- Nivel 2: Audio -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">🎧</div>
+                                <div>
+                                    <h2>2. Comprensión Auditiva</h2>
+                                    <p>Escucha y selecciona palabras o frases</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('listening')">Aprender</button>
+                        </div>
+                        
+                        <!-- Nivel 3: Escritura -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">⌨️</div>
+                                <div>
+                                    <h2>3. Escritura Exacta</h2>
+                                    <p>Escribe palabras y frases en inglés</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('typing')">Aprender</button>
+                        </div>
+
+                        <!-- Nivel 4: Frases -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">🧩</div>
+                                <div>
+                                    <h2>4. Armar Frases</h2>
+                                    <p>Ordena las palabras correctamente</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('sentences')">Aprender</button>
+                        </div>
+
+                        <!-- Nivel 5: Hablar -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">🎙️</div>
+                                <div>
+                                    <h2>5. Pronunciación</h2>
+                                    <p>Pronuncia palabras sueltas y frases completas</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('speaking')">Aprender</button>
+                        </div>
+
+                        <!-- Nivel 6: Inversa -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">🔄</div>
+                                <div>
+                                    <h2>6. Traducción Inversa</h2>
+                                    <p>Lee en inglés y selecciona en español</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('reverse')">Aprender</button>
+                        </div>
+
+                        <!-- Nivel 7: Phrasal Verbs -->
+                        <div class="course-card">
+                            <div class="course-info">
+                                <div class="course-icon">🔥</div>
+                                <div>
+                                    <h2>7. Phrasal Verbs</h2>
+                                    <p>Aprende 3 phrasal verbs por etapa</p>
+                                </div>
+                            </div>
+                            <button class="primary-btn start-btn" onclick="startLesson('phrasal_verbs')">Aprender</button>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="daily-goal-card">
+                        <h3>Objetivo Diario</h3>
+                        <div class="goal-progress">
+                            <div class="circles" id="goal-circles">
+                                <div class="circle"><i class="fa-solid fa-lock"></i></div>
+                                <div class="circle"><i class="fa-solid fa-lock"></i></div>
+                                <div class="circle"><i class="fa-solid fa-lock"></i></div>
+                            </div>
+                            <p id="goal-text">0 / 3 lecciones completadas</p>
+                        </div>
+                    </div>
+                </aside>
+            </main>
         </div>
-      </section>
 
-      <!-- Idioms Section -->
-      <section id="idioms-section" class="section">
-        <h2>Idioms Challenge</h2>
-        <p class="subtitle">Select the correct native phrase. (+10 XP per hit)</p>
-        <div class="glass-card quiz-container">
-          <div class="question-text" id="idioms-question">Loading...</div>
-          <div class="options" id="idioms-options"></div>
-          <div class="feedback-msg" id="idioms-feedback"></div>
-          <button class="btn-primary next-btn" id="idioms-next-btn">Next Question</button>
-          <div class="progress-info" id="idioms-progress">1 / 5</div>
+        <!-- LEARNING SESSION SCREEN -->
+        <div id="learning-session" class="screen">
+            <header class="session-top-bar">
+                <button class="icon-btn close-btn" id="close-session-btn"><i class="fa-solid fa-xmark"></i></button>
+                <div class="session-progress">
+                    <div class="session-progress-fill" id="session-progress-fill"></div>
+                </div>
+                <button class="icon-btn settings-btn"><i class="fa-solid fa-gear"></i></button>
+            </header>
+
+            <main class="learning-container">
+                <div class="question-container">
+                    <span class="question-label" id="question-label">¿Cómo se dice...?</span>
+                    <h1 class="target-word" id="target-word">Cargando...</h1>
+                    <button id="play-audio-btn" class="icon-btn audio-btn" style="display: none;"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+
+                <!-- Contenedor clásico y listening: botones -->
+                <div class="options-grid" id="options-grid">
+                    <!-- Opciones se inyectan via JS -->
+                </div>
+
+                <!-- Contenedor escritura: input de texto -->
+                <div class="typing-container" id="typing-container" style="display: none;">
+                    <input type="text" id="typing-input" class="typing-input" placeholder="Escribe en inglés..." autocomplete="off">
+                    <button id="check-typing-btn" class="primary-btn check-typing-btn">Comprobar</button>
+                </div>
+
+                <!-- Contenedor frases: click para armar -->
+                <div class="sentence-container" id="sentence-container" style="display: none;">
+                    <div class="sentence-dropzone" id="sentence-dropzone"></div>
+                    <div class="sentence-words" id="sentence-words"></div>
+                </div>
+
+                <!-- Contenedor speaking: micrófono -->
+                <div class="speaking-container" id="speaking-container" style="display: none;">
+                    <div class="mic-status" id="mic-status">Haz clic en el micrófono y habla</div>
+                    <button id="mic-btn" class="icon-btn mic-btn"><i class="fa-solid fa-microphone"></i></button>
+                    <div class="speech-result" id="speech-result"></div>
+                </div>
+            </main>
+
+            <footer class="session-footer" id="session-footer">
+                <div class="footer-content">
+                    <div class="feedback-message" id="feedback-message"></div>
+                    <button class="primary-btn continue-btn" id="continue-btn">Continuar</button>
+                </div>
+            </footer>
         </div>
-      </section>
-
-      <!-- Grammar Section -->
-      <section id="grammar-section" class="section">
-        <h2>Master Grammar</h2>
-        <p class="subtitle">Fill in the blanks with advanced structures. (+10 XP)</p>
-        <div class="glass-card quiz-container">
-          <div class="question-text" id="grammar-question">Loading...</div>
-          <div class="options" id="grammar-options"></div>
-          <div class="feedback-msg" id="grammar-feedback"></div>
-          <button class="btn-primary next-btn" id="grammar-next-btn">Next Challenge</button>
-          <div class="progress-info" id="grammar-progress">1 / 5</div>
+        
+        <!-- SUMMARY SCREEN -->
+        <div id="summary-screen" class="screen">
+            <header class="top-nav">
+                <div class="logo">
+                    <h2>MemriseClone</h2>
+                </div>
+            </header>
+            <main class="summary-container">
+                <div class="summary-card">
+                    <div class="celebration-icon">🎉</div>
+                    <h1>¡Lección Completada!</h1>
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <i class="fa-solid fa-star" style="color: var(--primary-yellow);"></i>
+                            <span id="score-text">+10 XP</span>
+                        </div>
+                        <div class="summary-stat">
+                            <i class="fa-solid fa-bullseye" style="color: var(--primary-blue);"></i>
+                            <span id="accuracy-text">100% Precisión</span>
+                        </div>
+                    </div>
+                    <button class="primary-btn start-btn" id="finish-btn">Volver al Inicio</button>
+                </div>
+            </main>
         </div>
-      </section>
+    </div>
+    
+    <audio id="correct-sound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3"></audio>
+    <audio id="wrong-sound" src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=error-126627.mp3"></audio>
 
-      <!-- Writing Section (AI Mock) -->
-      <section id="writing-section" class="section">
-        <h2>AI Writing Challenge</h2>
-        <p class="subtitle">Write naturally. The AI will evaluate your vocabulary and structure.</p>
-        <div class="glass-card writing-container">
-          <div class="writing-prompt" id="writing-prompt">
-            Loading prompt...
-          </div>
-          <textarea class="writing-textarea" id="writing-input" placeholder="Start typing your response here..."></textarea>
-          <div class="writing-footer">
-            <span class="word-count" id="writing-word-count">Words: 0</span>
-            <button class="btn-primary" id="writing-submit">Evaluate with AI ✨</button>
-          </div>
-          
-          <div class="ai-loading" id="ai-loading">
-            Evaluating semantics <span></span><span></span><span></span>
-          </div>
-
-          <div class="ai-feedback-box" id="ai-feedback">
-            <h4>C1 Level Achieved! (+50 XP)</h4>
-            <p>Your sentence structure is great. You successfully used advanced terms like 'furthermore' and 'consequently'. Good job maintaining a formal tone.</p>
-            <button class="btn-primary" id="writing-next-btn" style="margin-top:1rem;">Next Prompt</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Speaking Section (Speech-to-Text) -->
-      <section id="speaking-section" class="section">
-        <h2>Pronunciation Check</h2>
-        <p class="subtitle">Read the phrase out loud clearly in American English. (+20 XP)</p>
-        <div class="glass-card quiz-container">
-          <div class="writing-prompt" style="font-size:1.4rem; text-align:center; line-height: 1.4;" id="speaking-prompt">
-            Loading phrase...
-          </div>
-          
-          <div style="display:flex; justify-content:center; margin-top:2rem; margin-bottom:1rem;">
-            <button class="btn-mic" id="btn-mic" title="Click to Start Speaking">🎤</button>
-          </div>
-          <p id="mic-status" style="text-align:center; color:var(--text-secondary); margin-bottom:1.5rem; font-weight: 500;">Click the microphone to start.</p>
-          
-          <div class="transcript-box" id="transcript-box">
-             <span id="transcript-text" style="color:var(--text-secondary); font-style:italic;">Your transcribed voice will appear here...</span>
-          </div>
-
-          <div class="ai-feedback-box" id="speaking-feedback" style="width: 100%;"></div>
-          <button class="btn-primary next-btn" id="speaking-next-btn" style="margin-top:1.5rem; display:none;">Next Phrase</button>
-        </div>
-      </section>
-
-    </main>
-    <script type="module" src="./main.js"></script>
-  </body>
+    <script src="app.js"></script>
+</body>
 </html>
