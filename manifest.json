@@ -1,0 +1,17 @@
+{
+  "name": "Memrise Clone",
+  "short_name": "MemClone",
+  "description": "Learn English with the Memrise Clone.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFC800",
+  "theme_color": "#FFC800",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
