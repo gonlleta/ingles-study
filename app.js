@@ -603,3 +603,54 @@ document.addEventListener('click', () => {
     elements.correctSound.load();
     elements.wrongSound.load();
 }, { once: true });
+
+// --- PWA Automatic Install Prompt Logic ---
+let deferredPrompt;
+const pwaBanner = document.getElementById('pwa-install-banner');
+const pwaInstallBtn = document.getElementById('pwa-install-btn');
+const pwaCloseBtn = document.getElementById('pwa-close-btn');
+const pwaInstructions = document.getElementById('pwa-instructions');
+
+const isIos = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test(userAgent);
+};
+
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+if (!isStandalone()) {
+    if (isIos()) {
+        // Show iOS instructions after 3 seconds
+        if (pwaInstructions) {
+            pwaInstructions.innerHTML = "Toca <strong>Compartir</strong> y luego <strong>Añadir a inicio</strong>.";
+        }
+        if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+        setTimeout(() => { if (pwaBanner) pwaBanner.style.display = 'flex'; }, 3000);
+    } else {
+        // Android/Chrome Logic
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => { if (pwaBanner) pwaBanner.style.display = 'flex'; }, 3000);
+        });
+    }
+}
+
+if (pwaInstallBtn) {
+    pwaInstallBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                pwaBanner.style.display = 'none';
+            }
+            deferredPrompt = null;
+        }
+    });
+}
+
+if (pwaCloseBtn) {
+    pwaCloseBtn.addEventListener('click', () => {
+        pwaBanner.style.display = 'none';
+    });
+}
